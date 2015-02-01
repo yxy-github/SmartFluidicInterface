@@ -9,6 +9,16 @@ public class DataSaver {
 
   public File createFile() {
     final String filename = SmartFluidicInterface.getInstance().getMainPanel().getFilename();
+    File folder = null;
+    String folderString = null;
+
+    if (filename.lastIndexOf("/") >= 0) {
+      folderString = filename.substring(0, filename.lastIndexOf("/"));
+    }
+
+    if (folderString != null) {
+      folder = new File(folderString);
+    }
 
     file = new File(filename + ".csv");
     if (file.exists()) {
@@ -16,6 +26,7 @@ public class DataSaver {
     }
 
     try {
+      folder.mkdirs();
       file.createNewFile();
     }
     catch (FileNotFoundException e) {
