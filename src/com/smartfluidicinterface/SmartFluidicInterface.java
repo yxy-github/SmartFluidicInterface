@@ -1,6 +1,8 @@
 package com.smartfluidicinterface;
 
 import com.smartfluidicinterface.common.Constants;
+import com.smartfluidicinterface.data.reader.Bridge;
+import com.smartfluidicinterface.data.reader.DataSaver;
 import com.smartfluidicinterface.view.MainPanel;
 import nl.jj.swingx.gui.modal.JModalFrame;
 
@@ -14,6 +16,8 @@ public final class SmartFluidicInterface {
 
   private final JModalFrame applicationFrame = new JModalFrame(Constants.APPLICATION_NAME);
   private final MainPanel mainPanel = new MainPanel();
+  private final DataSaver dataSaver = new DataSaver();
+  private final Bridge bridge = new Bridge();
 
   private SmartFluidicInterface() {
     initApplicationFrame();
@@ -23,12 +27,19 @@ public final class SmartFluidicInterface {
     if (instance == null) {
       instance = new SmartFluidicInterface();
     }
-
     return instance;
   }
 
   public MainPanel getMainPanel() {
     return mainPanel;
+  }
+
+  public DataSaver getDataSaver() {
+    return dataSaver;
+  }
+
+  public Bridge getBridge() {
+    return bridge;
   }
 
   private void initApplicationFrame() {

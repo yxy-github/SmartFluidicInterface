@@ -10,6 +10,7 @@
     <orderEntry type="library" name="swingx_v0203" level="project" />
     <orderEntry type="library" name="jchart2d-3.2.2" level="project" />
     <orderEntry type="library" name="AbsoluteLayout" level="project" />
+    <orderEntry type="library" name="phidget21" level="project" />
   </component>
 </module>
 

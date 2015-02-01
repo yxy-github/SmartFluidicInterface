@@ -15,11 +15,10 @@ import java.text.NumberFormat;
 
 public final class Chart extends JPanel {
   private final Chart2D chart = new Chart2D();
+  private final ITrace2D[] traces = createITraces();
 
   public Chart() {
     chart.setPreferredSize(new Dimension(600, 400));
-
-    final ITrace2D[] traces = createITraces();
     addITracesToChart(traces);
     initChartColours();
 
@@ -29,41 +28,6 @@ public final class Chart extends JPanel {
     initAxisX(format);
     initAxisY(format);
     add(chart);
-  }
-
-  private void initAxisY(final NumberFormat format) {
-    final IAxis axisY = chart.getAxisY();
-    axisY.getAxisTitle().setTitle("Voltage");
-    axisY.setPaintGrid(true);
-    axisY.setFormatter(new LabelFormatterNumber(format));
-    axisY.setRangePolicy(new RangePolicyFixedViewport(new Range(0, 5)));
-    //axisX.setRangePolicy(new RangePolicyMinimumViewport(new Range(0, +10)));
-    //axisX.setRangePolicy(new RangePolicyFixedViewport(new Range(-10, 10)));
-  }
-
-  private void initAxisX(final NumberFormat format) {
-    final IAxis axisX = chart.getAxisX();
-    axisX.getAxisTitle().setTitle("Time");
-    axisX.setPaintGrid(false);
-    // Important!
-    // Or it will allow more than 100 integer digits and rendering will be
-    // confused.
-    // See the comment for java.text.DecimalFormat#applyPattern(String)
-    format.setMaximumIntegerDigits(3);
-    axisX.setFormatter(new LabelFormatterNumber(format));
-    //axisX.setRange(new Range(-10, 10));
-  }
-
-  private void initChartColours() {
-    chart.setBackground(Color.WHITE);
-    chart.setForeground(Color.BLACK);
-    chart.setGridColor(Color.BLACK);
-  }
-
-  private void addITracesToChart(final ITrace2D[] traces) {
-    for (final ITrace2D trace : traces) {
-      chart.addTrace(trace);
-    }
   }
 
   private static ITrace2D[] createITraces() {
@@ -82,5 +46,36 @@ public final class Chart extends JPanel {
     return trace;
   }
 
+  private void addITracesToChart(final ITrace2D[] traces) {
+    for (final ITrace2D trace : traces) {
+      chart.addTrace(trace);
+    }
+  }
+
+  private void initChartColours() {
+    chart.setBackground(Color.WHITE);
+    chart.setForeground(Color.BLACK);
+    chart.setGridColor(Color.BLACK);
+  }
+
+  private void initAxisX(final NumberFormat format) {
+    final IAxis axisX = chart.getAxisX();
+    axisX.getAxisTitle().setTitle("Time");
+    axisX.setPaintGrid(false);
+    format.setMaximumIntegerDigits(3);
+    axisX.setFormatter(new LabelFormatterNumber(format));
+  }
+
+  private void initAxisY(final NumberFormat format) {
+    final IAxis axisY = chart.getAxisY();
+    axisY.getAxisTitle().setTitle("Voltage");
+    axisY.setPaintGrid(true);
+    axisY.setFormatter(new LabelFormatterNumber(format));
+    axisY.setRangePolicy(new RangePolicyFixedViewport(new Range(2, 4.5)));
+  }
+
+  public ITrace2D[] getITraces() {
+    return traces;
+  }
 
 }

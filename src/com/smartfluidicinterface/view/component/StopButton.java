@@ -1,5 +1,7 @@
 package com.smartfluidicinterface.view.component;
 
+import com.smartfluidicinterface.SmartFluidicInterface;
+
 public final class StopButton extends AbstractButton {
   public StopButton() {
     super("Stop");
@@ -7,6 +9,7 @@ public final class StopButton extends AbstractButton {
 
   @Override
   protected void doAction() {
-    // TODO: provide code to perform the Stop action
+    SmartFluidicInterface.getInstance().getBridge().closeBridge();
+    SmartFluidicInterface.getInstance().getMainPanel().resetChart();
   }
 }
