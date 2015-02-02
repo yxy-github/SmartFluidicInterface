@@ -13,7 +13,7 @@ public final class MainPanel extends JPanel {
   private final StartButton startButton = new StartButton(650, 100);
   private final StopButton stopButton = new StopButton(750, 100);
   private final FilenameTextField filenameTextField = new FilenameTextField(650, 50);
-  private final JLabel message = new JLabel("Test");
+  private final JLabel message = new JLabel();
   private Chart chart = new Chart(CHART_X, CHART_Y);
 
   public MainPanel() {
@@ -53,6 +53,14 @@ public final class MainPanel extends JPanel {
 
   public Chart getChart() {
     return chart;
+  }
+
+  public StartButton getStartButton() {
+    return startButton;
+  }
+
+  public StopButton getStopButton() {
+    return stopButton;
   }
 
   public void resetChart() {

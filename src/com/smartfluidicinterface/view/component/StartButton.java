@@ -9,8 +9,10 @@ public final class StartButton extends AbstractButton {
 
   @Override
   protected void doAction() {
+    this.setEnabled(false);
     final long startTime = System.currentTimeMillis();
     SmartFluidicInterface.getInstance().getDataSaver().createFile();
     SmartFluidicInterface.getInstance().getBridge().startBridge(startTime);
+    SmartFluidicInterface.getInstance().getMainPanel().getStopButton().setEnabled(true);
   }
 }

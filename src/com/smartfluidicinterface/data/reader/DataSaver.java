@@ -26,7 +26,9 @@ public class DataSaver {
     }
 
     try {
-      folder.mkdirs();
+      if (folder != null) {
+        folder.mkdirs();
+      }
       file.createNewFile();
     }
     catch (FileNotFoundException e) {
