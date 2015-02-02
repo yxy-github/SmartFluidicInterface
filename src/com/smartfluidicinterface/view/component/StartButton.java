@@ -3,8 +3,8 @@ package com.smartfluidicinterface.view.component;
 import com.smartfluidicinterface.SmartFluidicInterface;
 
 public final class StartButton extends AbstractButton {
-  public StartButton() {
-    super("Start");
+  public StartButton(final int x, final int y) {
+    super("Start", x, y);
   }
 
   @Override

@@ -6,9 +6,10 @@ import java.awt.event.ActionListener;
 
 public abstract class AbstractButton extends JButton {
 
-  public AbstractButton(final String buttonText) {
+  public AbstractButton(final String buttonText, final int x, final int y) {
     super(buttonText);
     addActionListener(new ButtonActionListener());
+    setBounds(x, y, 90, 20);
   }
 
   /**

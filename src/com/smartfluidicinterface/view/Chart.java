@@ -17,8 +17,10 @@ public final class Chart extends JPanel {
   private final Chart2D chart = new Chart2D();
   private final ITrace2D[] traces = createITraces();
 
-  public Chart() {
-    chart.setPreferredSize(new Dimension(600, 400));
+  public Chart(final int x, final int y) {
+    setBounds(x, y, 600, 400);
+    setLayout(new BorderLayout());
+
     addITracesToChart(traces);
     initChartColours();
 
@@ -77,5 +79,4 @@ public final class Chart extends JPanel {
   public ITrace2D[] getITraces() {
     return traces;
   }
-
 }

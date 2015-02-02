@@ -47,6 +47,7 @@ public final class SmartFluidicInterface {
     applicationFrame.setExtendedState(Frame.MAXIMIZED_BOTH);
 
     final JPanel applicationContentPanel = new JPanel();
+    applicationContentPanel.setLayout(new BorderLayout());
     applicationFrame.setContentPane(applicationContentPanel);
 
     applicationContentPanel.add(mainPanel);
