@@ -1,7 +1,9 @@
 <component name="libraryTable">
   <library name="AbsoluteLayout">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/../../../Softwares/JavaJNI/lib/AbsoluteLayout.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/AbsoluteLayout.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jchart2d-3.2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/phidget21.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
