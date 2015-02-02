@@ -12,7 +12,6 @@ public final class StopButton extends AbstractButton {
   protected void doAction() {
     SmartFluidicInterface.getInstance().getBridge().closeBridge();
     SmartFluidicInterface.getInstance().getMainPanel().resetChart();
-
     this.setEnabled(false);
     SmartFluidicInterface.getInstance().getMainPanel().getStartButton().setEnabled(true);
   }
