@@ -7,47 +7,70 @@ import info.monitorenter.gui.chart.ITrace2D;
 
 public class DataListenerUI implements BridgeDataListener {
   private long startTime;
+  int count = 0;
+  String features = "";
+
+  private static class Param {
+    double m;
+    double c;
+    private Param(final double m, final double c) {
+     this.m = m;
+     this.c = c;
+    }
+  }
 
   public void bridgeData(final BridgeDataEvent dataEvent) {
     final int channel = dataEvent.getIndex();
     final double voltage = dataEvent.getValue();
-    final double[] voltageCalibrate = new double[2];
     final ITrace2D[] traces = SmartFluidicInterface.getInstance().getMainPanel().getChart().getITraces();
 
-    double m = 0;
-    double c = 0;
-    voltageCalibrate[0] = channel;
-    String s = String.valueOf(channel) + (", ");
+    count++;
+    final Param paramCalibration = getParam(channel);
+    final double voltageCalibrate = paramCalibration.m * voltage + paramCalibration.c;
+    conditionString(channel, voltageCalibrate);
+
+    traces[channel].addPoint(((double) System.currentTimeMillis() - startTime) / 1000, voltageCalibrate);
+
+    if (channel == 3) {
+      SmartFluidicInterface.getInstance().getDataSaver().saveData(features);
+      features = "";
+    }
+  }
+
+  private static Param getParam(final int channel) {
+    final Param paramCalibration;
     switch (channel) {
       case 0:
-        m = 0.0051;
-        c = -0.0224;
-     //   voltageCalibrate[1] = 0.0051 * voltage - 0.0224;
-      //  traces[0].addPoint(((double) System.currentTimeMillis() - startTime) / 1000, voltageCalibrate[1]);
+        paramCalibration = new Param(0.0051, -0.0224);
         break;
       case 1:
-        m = 0.0052;
-        c = -0.0846;
-      //  voltageCalibrate[1] = 0.0052 * voltage - 0.0846;
-      //  traces[1].addPoint(((double) System.currentTimeMillis() - startTime) / 1000, voltageCalibrate[1]);
+        paramCalibration = new Param(0.0052, -0.0846);
         break;
       case 2:
-        m = 0.0051;
-        c = -0.0056;
-       // voltageCalibrate[1] = 0.0051 * voltage - 0.0056;
-       // traces[2].addPoint(((double) System.currentTimeMillis() - startTime) / 1000, voltageCalibrate[1]);
+        paramCalibration = new Param(0.0051, -0.0056);
         break;
       case 3:
-        m = 0.0050;
-        c = -0.0153;
-        //voltageCalibrate[1] = 0.0050 * voltage - 0.0153;
-        //traces[3].addPoint(((double) System.currentTimeMillis() - startTime) / 1000, voltageCalibrate[1]);
+        paramCalibration = new Param(0.0050, -0.0153);
         break;
+      default:
+        paramCalibration = new Param(0, 0);
     }
-    voltageCalibrate[1] = m * voltage + c;
-    traces[channel].addPoint(((double) System.currentTimeMillis() - startTime) / 1000, voltageCalibrate[1]);
-    s += Double.toString(voltageCalibrate[1]) + "\n";
-    SmartFluidicInterface.getInstance().getDataSaver().saveData(s);
+    return paramCalibration;
+  }
+
+  private void conditionString(final int channel, final double voltageCalibrate) {
+    if (channel == 3) {
+      features += Double.toString(voltageCalibrate) + "\n";
+    }
+    else {
+      features += Double.toString(voltageCalibrate) + ",";
+    }
+
+    // Remove the feature if the first channel is not 0
+    if (count == 1 && channel != 0) {
+      features = "";
+      count--;
+    }
   }
 
   public void setStartTime(final long startTime) {
