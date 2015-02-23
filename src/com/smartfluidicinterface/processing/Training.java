@@ -35,20 +35,16 @@ public class Training {
 
     buildBestClassifier(train, svm, bestSVMParam);
 
+    saveClassifier(sourceFolder, svm);
+  }
+
+  private static void saveClassifier(final String sourceFolder, final LibSVM svm) {
     try {
       SerializationHelper.write(sourceFolder + "/svm.model", svm);
     } catch (final Exception e) {
       SmartFluidicInterface.getInstance().getMainPanel().setMessage("Error: Training-trainModel");
       e.printStackTrace();
     }
-
-    // Move this to test later
-    /*try {
-      LibSVM svm2 = (LibSVM) SerializationHelper.read(sourceFolder + "/svm.model");
-      System.out.println(svm2.getCost() + "\t" + svm2.getGamma() + "\t" + svm2.getKernelType());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }*/
   }
 
   private static void disableSVMOutput() {

@@ -9,6 +9,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="swingx_v0203" level="project" />
     <orderEntry type="library" name="AbsoluteLayout" level="project" />
+    <orderEntry type="library" name="libsvm" level="project" />
   </component>
 </module>
 

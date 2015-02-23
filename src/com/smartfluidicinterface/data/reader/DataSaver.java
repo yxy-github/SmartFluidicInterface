@@ -6,11 +6,11 @@ import java.io.*;
 
 public class DataSaver {
   private File file;
+  String folderString;
 
-  public File createFile() {
-    final String filename = SmartFluidicInterface.getInstance().getMainPanel().getFilename();
+  public File createFile(final String filename) {
     File folder = null;
-    String folderString = null;
+    folderString = null;
 
     if (filename.lastIndexOf("/") >= 0) {
       folderString = filename.substring(0, filename.lastIndexOf("/"));
@@ -31,29 +31,41 @@ public class DataSaver {
       }
       file.createNewFile();
     }
-    catch (FileNotFoundException e) {
+    catch (final FileNotFoundException e) {
       SmartFluidicInterface.getInstance().getMainPanel().setMessage("File not found.");
       e.printStackTrace();
     }
-    catch (IOException e) {
-      SmartFluidicInterface.getInstance().getMainPanel().setMessage("Something went wrong.");
+    catch (final IOException e) {
+      SmartFluidicInterface.getInstance().getMainPanel().setMessage("Error: DataSaver-createFile.");
       e.printStackTrace();
     }
+
     return file;
   }
 
-  public void saveData(String s) {
+  public String getFolderName() {
+    if (folderString == null) {
+      folderString = "data";
+    }
+    return folderString;
+  }
+
+  public void createHeader(final String s) {
+    saveData(s);
+  }
+
+  public void saveData(final String s) {
     try {
-      BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
+      final BufferedWriter writer = new BufferedWriter(new FileWriter(file, true));
       writer.write(s);
       writer.flush();
       writer.close();
     }
-    catch (FileNotFoundException e) {
+    catch (final FileNotFoundException e) {
       SmartFluidicInterface.getInstance().getMainPanel().setMessage("File not found.");
       e.printStackTrace();
     }
-    catch(IOException e) {
+    catch(final IOException e) {
       SmartFluidicInterface.getInstance().getMainPanel().setMessage("Something went wrong.");
       e.printStackTrace();
     }

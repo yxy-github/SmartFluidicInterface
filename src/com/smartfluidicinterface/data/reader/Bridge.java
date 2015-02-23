@@ -2,31 +2,25 @@ package com.smartfluidicinterface.data.reader;
 
 import com.phidgets.BridgePhidget;
 import com.phidgets.PhidgetException;
-import com.phidgets.event.BridgeDataEvent;
 import com.smartfluidicinterface.SmartFluidicInterface;
 import com.smartfluidicinterface.data.listener.AttachListenerUI;
 import com.smartfluidicinterface.data.listener.DataListenerUI;
 import com.smartfluidicinterface.data.listener.DetachListenerUI;
 import com.smartfluidicinterface.data.listener.ErrorListenerUI;
 
-import java.util.Hashtable;
-
 public class Bridge {
   private BridgePhidget bridge;
-  private Hashtable gainHashTable;
-  private AttachListenerUI attachListener;
-  private DetachListenerUI detachListener;
   private ErrorListenerUI errorListener;
   private DataListenerUI dataListener;
 
-  public void startBridge(final long startTime) {
+  public void startBridge(final long startTime, final boolean isTest) {
     try {
       bridge = new BridgePhidget();
 
-      attachListener = new AttachListenerUI();
-      detachListener = new DetachListenerUI();
+      final AttachListenerUI attachListener = new AttachListenerUI();
+      final DetachListenerUI detachListener = new DetachListenerUI();
       errorListener = new ErrorListenerUI();
-      dataListener = new DataListenerUI();
+      dataListener = new DataListenerUI(isTest);
 
       bridge.addAttachListener(attachListener);
       bridge.addDetachListener(detachListener);
@@ -43,9 +37,9 @@ public class Bridge {
       // Enable bridge, set gain/data rate
       for (int i = 0; i < bridge.getInputCount(); i++) {
         bridge.setEnabled(i, true);
-        bridge.setGain(i, bridge.PHIDGET_BRIDGE_GAIN_1);
+        bridge.setGain(i, BridgePhidget.PHIDGET_BRIDGE_GAIN_1);
       }
-      bridge.setDataRate(125);
+      bridge.setDataRate(128);
 
       dataListener.setStartTime(startTime);
       bridge.addBridgeDataListener(dataListener);

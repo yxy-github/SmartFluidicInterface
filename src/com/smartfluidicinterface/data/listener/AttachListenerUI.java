@@ -12,7 +12,7 @@ public class AttachListenerUI implements AttachListener {
       final BridgePhidget attached = (BridgePhidget) attachEvent.getSource();
       final String message = attached.getDeviceName() + " is attached: " + Boolean.toString(attached.isAttached());
       SmartFluidicInterface.getInstance().getMainPanel().setMessage(message);
-    } catch (PhidgetException ex) {
+    } catch (final PhidgetException ex) {
       SmartFluidicInterface.getInstance().getMainPanel().setMessage(
           ex.getDescription() + "Phidget error " + ex.getErrorNumber());
     }
